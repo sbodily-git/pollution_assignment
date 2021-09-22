@@ -13,7 +13,8 @@ pollutantmean <- function(directory, pollutant, id=1:332){
   ## in the 'id' vector (ignoring NA values)
   ## Result is not rounded.
   
-  id100_data <- read.csv("specdata/100.csv", headers=TRUE)
+  library(readr)
+  id100_data <- read_csv("specdata/100.csv", col_names = TRUE, col_types = "Dddi")
   id100_sulfate <- id100_data["sulfate"][!is.na(id100_data["sulfate"])];
   
 } # end pollutantmean
