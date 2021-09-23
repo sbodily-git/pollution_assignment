@@ -12,9 +12,18 @@ pollutantmean <- function(directory, pollutant, id=1:332){
   ## Return the mean of the pollutant across all monitor list
   ## in the 'id' vector (ignoring NA values)
   ## Result is not rounded.
+
+  the_data <- c()
   
-  library(readr)
-  id100_data <- read_csv("specdata/100.csv", col_names = TRUE, col_types = "Dddi")
-  id100_sulfate <- id100_data["sulfate"][!is.na(id100_data["sulfate"])];
+  for (idx in id){
+    poll_data <- read_csv(paste(name_dir, "/", formatC(idx, width = 3, flag = "0"), ".csv", sep = ""), 
+                          col_names = TRUE, col_types = "Dddi")
+    the_data <- c(the_data,
+                  poll_data[pollutant][!is.na(poll_data[pollutant])])
+  }
+  mean(the_data)
+
+  # id100_data <- read_csv("specdata/100.csv", col_names = TRUE, col_types = "Dddi")
+  # id100_sulfate <- id100_data["sulfate"][!is.na(id100_data["sulfate"])]
   
 } # end pollutantmean
