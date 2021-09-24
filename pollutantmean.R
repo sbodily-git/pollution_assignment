@@ -16,7 +16,7 @@ pollutantmean <- function(directory, pollutant, id=1:332){
   the_data <- c()
   
   for (idx in id){
-    poll_data <- read_csv(paste(name_dir, "/", formatC(idx, width = 3, flag = "0"), ".csv", sep = ""), 
+    poll_data <- read_csv(paste(directory, "/", formatC(idx, width = 3, flag = "0"), ".csv", sep = ""), 
                           col_names = TRUE, col_types = "Dddi")
     the_data <- c(the_data,
                   poll_data[pollutant][!is.na(poll_data[pollutant])])
