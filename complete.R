@@ -13,16 +13,20 @@ complete <- function(directory, id = 1:332) {
 	## where 'id' is the monitor ID number and 'nobs' is the
 	## number of complete cases.
   
-	start <- id[1]
-	df <- data.frame("id", "nobs")
-  for(indx in id) {
-    poll_data <- read_csv(paste(directory, "/", formatC(indx, width = 3, flag = "0"), ".csv", sep = ""), 
+  lp <- id
+  id <- c()
+  nobs <- c()
+  for(idx in lp) {
+    poll_data <- read_csv(paste(directory, "/", formatC(idx, width = 3, flag = "0"), ".csv", sep = ""), 
                           col_names = TRUE, col_types = "Dddi")
-    # Find fows with measurements for both sulfate and nitrate
+    # Find rows with measurements for both sulfate and nitrate
     temp <- !is.na(poll_data$sulfate) & !is.na(poll_data$nitrate)
-    df[indx-start+1,] = c(indx, sum(temp))
+
+    id <- c(id, idx)
+    nobs <- c(nobs, sum(temp))
+
   } # end loop
 	
-	return(df)
-
+  data.frame(id, nobs)
+  
 } # end complete
